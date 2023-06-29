@@ -3,6 +3,8 @@ export const baseURL = "https://chatter-be.onrender.com";
 const urls = {  
   // Auth
   login: `${baseURL}/auth/login`,
+  signup: `${baseURL}/auth/signup`,
+  logout: `${baseURL}/auth/logout`,
 
   // Users
   fetchUsersUrl: `${baseURL}/users`,
