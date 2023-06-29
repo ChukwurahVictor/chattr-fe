@@ -10,7 +10,7 @@ export interface CustomSpinnerProps {
 
 const CustomSpinner = ({ height, width }: CustomSpinnerProps) => {
   return (
-    <Flex justify={"center"} alignItems={"center"} mt={"30vh"}>
+    <Flex justify={"center"} alignItems={"center"} mt={"30%"}>
       <ColorRing
         visible={true}
         height={height || "40"}

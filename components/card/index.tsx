@@ -9,15 +9,17 @@ import ReactMarkdown from 'react-markdown';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComment } from "@fortawesome/free-regular-svg-icons";
+import Image from 'next/image'
 
 interface PropType {
   author: string,
   title: string,
   body: string,
   dateTime: string,
+  // image: string,
 }
 
-const PostCard = ({ author, title, body, dateTime }: PropType) => {
+const PostCard = ({ author, title, body, dateTime }: PropType) => {  
   return (
     <div className="container mx-auto">
       <div className="flex items-center justify-between max-w-2xl mx-8 my-4 sm:max-w-2xl lg:max-w-3xl">
@@ -25,7 +27,7 @@ const PostCard = ({ author, title, body, dateTime }: PropType) => {
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-1">
               <Avatar src={FrameTwo.src} size="sm" name="Jonathan Reinink" />
-              <div className='flex items-center gap-1'>
+              <div className="flex items-center gap-1">
                 <p className="font-medium leading-none text-gray-900">
                   {author}
                 </p>
@@ -52,10 +54,12 @@ const PostCard = ({ author, title, body, dateTime }: PropType) => {
             </p>
           </div>
         </div>
-        <img
-          src={FrameOne.src}
-          alt="img"
+        <Image
           className="hidden md:block md:w-36 md:h-36"
+          src={FrameOne.src}
+          width={50}
+          height={30}
+          alt="img"
         />
       </div>
     </div>

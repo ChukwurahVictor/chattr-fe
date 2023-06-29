@@ -12,9 +12,10 @@ export const reformData = (data: DataType): Post[] =>
     data?.posts?.map((d: Post) => ({ ...d })) || [];
 
 type Post = {
-    id: number;
+    id: string;
     title: string;
     content: string;
+    image: string;
     author: {
       firstName: string;
       lastName: string;
@@ -51,7 +52,7 @@ export const useFetchPosts = (params?: PostReqParams): SwrFetchReturnType => {
 };
 
 export const useFetchSinglePost = (
-  id: number,
+  id: string,
   params?: PostReqParams
 ): SwrFetchOneReturnType => {
   const fetcher = async () => {

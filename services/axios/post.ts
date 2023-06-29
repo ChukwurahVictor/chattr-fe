@@ -29,7 +29,7 @@ export const getPosts = (params?: PostReqParams) => {
   });
 };
 
-export const getSinglePost = (id: number, params?: PostReqParams) => {
+export const getSinglePost = (id: string, params?: PostReqParams) => {
   return axios({
     method: "get",
     url: urls.fetchSinglePostsUrl(id),

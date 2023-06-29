@@ -27,7 +27,7 @@ export const getUsers = (params?: UserReqParams) => {
     });
 };
 
-export const getUser = (id: number) => {
+export const getUser = (id: string) => {
     return axios({
       method: "get",
       url: urls.fetchSingleUserUrl(id),

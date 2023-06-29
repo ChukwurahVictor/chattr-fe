@@ -28,7 +28,7 @@ export const getCategories = () => {
   });
 };
 
-export const getSingleCategory = (id: number) => {
+export const getSingleCategory = (id: string) => {
   return axios({
     method: "get",
     url: urls.fetchSingleCategoryUrl(id),

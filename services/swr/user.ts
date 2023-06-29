@@ -54,7 +54,7 @@ export const useFetchUsers = (params?: UserReqParams): SwrFetchReturnType => {
 };
 
 export const useFetchSingleUser = (
-  id: number,
+  id: string,
   params?: UserReqParams
 ): SwrFetchSingleReturnType => {
   const fetcher = async () => {

@@ -12,7 +12,7 @@ const SinglePost = () => {
   const pathname = usePathname();
   const id = pathname!.replace("/post/", "");
 
-  const { data, isGenerating } = useFetchSinglePost(+id);
+  const { data, isGenerating } = useFetchSinglePost(id);
   
   return (
     <Box

@@ -20,7 +20,7 @@ import Following from "@/components/following";
 
 const Library = () => {
   const { data } = useAppSelector(selectAuth);
-  const { data: userData } = useFetchSingleUser(+data?.user?.id);
+  const { data: userData } = useFetchSingleUser(data?.user?.id);
   // console.log(userData);
   
   return (
@@ -53,12 +53,15 @@ const Library = () => {
                   <>
                     {userData?.posts?.map((post: any) => {
                       return (
-                        <Card
-                          author={ `${post.author?.firstName} ${post.author?.lastName}`}
-                          title={post.title}
-                          body={post.content}
-                          dateTime={post.createdAt}
-                        />
+                        <div key={post.id}>
+                          <Card
+                            author={ `${post.author?.firstName} ${post.author?.lastName}`}
+                            title={post.title}
+                            body={post.content}
+                            dateTime={post.createdAt}
+                            // image={post.image}
+                          />
+                        </div>
                       );
                     })}
                   </>
@@ -71,12 +74,14 @@ const Library = () => {
                   <>
                     {userData?.posts?.map((post: any) => {
                       return (
-                        <Card
-                          author={"John Wick"}
-                          title={post.title}
-                          body={post.content}
-                          dateTime={post.createdAt}
-                        />
+                        <div key={post.id}>
+                          <Card
+                            author={"John Wick"}
+                            title={post.title}
+                            body={post.content}
+                            dateTime={post.createdAt}
+                          />
+                        </div>
                       );
                     })}
                   </>

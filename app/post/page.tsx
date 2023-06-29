@@ -8,9 +8,10 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator, Text, VStack, St
 import CustomSpinner from '@/components/custom-spinner';
 
 interface PostType {
-    id: number;
+    id: string;
     title: string;
     content: string;
+    image?: string;
     author: {
         firstName: string;
         lastName: string;
@@ -53,6 +54,7 @@ const Post = () => {
                             title={post.title}
                             body={post.content}
                             dateTime={post?.createdAt}
+                            // image={post.image}
                           />
                         </Link>
                     
@@ -81,6 +83,7 @@ const Post = () => {
                           title={post.title}
                           body={post.content}
                           dateTime={post.createdAt}
+                          // image={post.image}
                         />
                       </VStack>
                     </Link>

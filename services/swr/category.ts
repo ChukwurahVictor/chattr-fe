@@ -5,31 +5,26 @@ import { KeyedMutator } from "swr";
 import useSWR from "swr";
 
 export type DataType = {
-  posts: Post[];
+  categories: Category[];
 };
 
-export const reformData = (data: DataType): Post[] =>
-  data?.posts?.map((d: Post) => ({ ...d })) || [];
+export const reformData = (data: DataType): Category[] =>
+  data?.categories?.map((d: Category) => ({ ...d })) || [];
 
-type Post = {
-  id: number;
-  title: string;
-  content: string;
-  author: {
-    firstName: string;
-    lastName: string;
-  };
+type Category = {
+  id: string;
+  name: string;
 };
 
 export type SwrFetchReturnType = {
-  data: Post[];
+  data: Category[];
   isGenerating: boolean;
   isError: AxiosError;
   mutate: KeyedMutator<any>;
 };
 
 export type SwrFetchOneReturnType = {
-  data: Post;
+  data: Category;
 } & Omit<SwrFetchReturnType, "data">;
 
 export const useFetchCategories = () => {
@@ -50,7 +45,7 @@ export const useFetchCategories = () => {
 };
 
 export const useFetchSingleCategory = (
-  id: number
+  id: string
 ): SwrFetchOneReturnType => {
   const fetcher = async () => {
     const response = await getSingleCategory(id);
