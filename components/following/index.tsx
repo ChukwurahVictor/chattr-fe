@@ -51,7 +51,7 @@ const Following = () => {
                   {userData?.following?.map((following: any) => {
                     return (
                       <Flex gap={"2"} key={following.id}>
-                        <Avatar size={"sm"} name="Victor Chukwurah" />
+                        <Avatar size={"sm"} name={`${following.firstName} ${following.lastName}`} />
                         <Text>{following.firstName}</Text>
                       </Flex>
                     );
