@@ -1,23 +1,14 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import useAxios from '@/hooks/use-axios';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SigninPayloadType, loginDispatch, selectAuth } from '@/redux/slices/auth';
-import * as yup from 'yup'
 import { showToast } from '@/utils/show-toast';
 import { useRouter } from "next/navigation";
+import { signinSchema } from "@/schema";
 import urls from "@/services/axios/urls";
-
-export const signinSchema = yup.object().shape({
-  email: yup
-    .string()
-    .trim()
-    .email("Must be a valid email!")
-    .required("Email is required!"),
-  password: yup.string().trim().required("Password is required!"),
-});
 
 type User = {
   id: string;

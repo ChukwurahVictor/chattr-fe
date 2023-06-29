@@ -7,7 +7,7 @@ import { Avatar, Divider, Flex, Stack, Tab, TabIndicator, TabList, TabPanel, Tab
 
 const Following = () => {
   const { data } = useAppSelector(selectAuth);
-  const { data: userData } = useFetchSingleUser(+(data?.user?.id));
+  const { data: userData } = useFetchSingleUser(data?.user?.id);
 
   return (
     <Stack direction="row" h="100dvh" p={4}>
