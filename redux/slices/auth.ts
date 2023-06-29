@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { RootState } from "../store";
+import urls from "@/services/axios/urls";
 
 type AuthState = {
   status: string;
@@ -51,13 +52,13 @@ const initialState: AuthState = {
 }
 
 export const registerUserService = async (data: RegisterUserPayloadType) => 
-    axios.post('/api/register', data);
+    axios.post(`${urls.signup}`, data);
 
 export const signinService = async (data: SigninPayloadType) => 
-    axios.post('http://localhost:3000/auth/login', data);
+    axios.post(`${urls.login}`, data);
 
 export const signoutService = () => 
-    axios.post('http://localhost:3000/auth/logout');
+    axios.post(`${urls.logout}`);
 
 
 export const registerUserAsync = createAsyncThunk(
@@ -75,7 +76,7 @@ export const registerUserAsync = createAsyncThunk(
 );
 
 export const signinAsync = createAsyncThunk(
-  "http://localhost:3000/auth/login",
+  `${urls.login}`,
   async (payload: SigninPayloadType, thunkAPI) => {
     try {
       const response = await signinService(payload);
