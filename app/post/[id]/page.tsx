@@ -57,7 +57,9 @@ const SinglePost = () => {
             alignItems="center"
             my="50px"
           />
-          <ReactMarkdown children={data?.content} remarkPlugins={[remarkGfm]} />
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {data?.content}
+          </ReactMarkdown>
         </>
       )}
     </Box>

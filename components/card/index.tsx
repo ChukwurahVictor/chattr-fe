@@ -43,7 +43,7 @@ const PostCard = ({ author, title, body, dateTime }: PropType) => {
             <div className="mb-2 base:text-[20px] lg:text-[28px] font-bold text-gray-900">
               {title}
             </div>
-            <ReactMarkdown children={body} />
+            <ReactMarkdown>{body}</ReactMarkdown>
           </div>
           <div className="flex gap-2 text-sm">
             <p>
