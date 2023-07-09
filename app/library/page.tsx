@@ -55,7 +55,7 @@ const Library = () => {
                       return (
                         <div key={post.id}>
                           <Card
-                            author={ `${post.author?.firstName} ${post.author?.lastName}`}
+                            author={`${post.author?.firstName} ${post.author?.lastName}`}
                             title={post.title}
                             body={post.content}
                             dateTime={post.createdAt}

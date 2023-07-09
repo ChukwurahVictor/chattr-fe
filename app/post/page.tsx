@@ -25,7 +25,7 @@ const Post = () => {
 
   return (
     <div className="w-[100%]">
-      <Tabs>
+      <Tabs isFitted>
         <TabList px="8">
           <Tab fontSize={"lg"} fontWeight={"bold"}>
             For You
@@ -42,30 +42,31 @@ const Post = () => {
         />
         <TabPanels>
           <TabPanel>
-            {isGenerating ? <CustomSpinner /> : 
-            <>
-              {data?.length > 0 ? (
-                <>
-                  {data?.map((post: PostType) => {
-                    return (
+            {isGenerating ? (
+              <CustomSpinner />
+            ) : (
+              <>
+                {data?.length > 0 ? (
+                  <>
+                    {data?.map((post: PostType) => {
+                      return (
                         <Link href={`/post/${post.id}`} key={post.id}>
                           <Card
                             author={`${post.author.firstName} ${post.author.lastName}`}
                             title={post.title}
-                            body={post.content}
+                            body={`${post.content.substring(0, 150)}...`}
                             dateTime={post?.createdAt}
                             // image={post.image}
                           />
                         </Link>
-                    
-                        );
-                      })}
+                      );
+                    })}
                   </>
-              ) : (
-              <Text>No posts</Text>
-              )}
-            </>
-            }
+                ) : (
+                  <Text>No posts</Text>
+                )}
+              </>
+            )}
           </TabPanel>
           <TabPanel>
             {data?.length > 0 ? (

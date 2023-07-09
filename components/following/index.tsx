@@ -13,7 +13,7 @@ const Following = () => {
     <Stack direction="row" h="100dvh" p={4}>
       <Divider orientation="vertical" border="0.2px solid #9D9D9D" />
       <Flex direction="column" gap={"5"}>
-        <Tabs>
+        <Tabs isFitted>
           <TabList mx="8">
             <Tab fontSize={"lg"} fontWeight={"bold"}>
               Followers
@@ -51,7 +51,10 @@ const Following = () => {
                   {userData?.following?.map((following: any) => {
                     return (
                       <Flex gap={"2"} key={following.id}>
-                        <Avatar size={"sm"} name={`${following.firstName} ${following.lastName}`} />
+                        <Avatar
+                          size={"sm"}
+                          name={`${following.firstName} ${following.lastName}`}
+                        />
                         <Text>{following.firstName}</Text>
                       </Flex>
                     );
