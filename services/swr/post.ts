@@ -17,6 +17,7 @@ type Post = {
     content: string;
     image: string;
     author: {
+      id: string;
       firstName: string;
       lastName: string;
     };

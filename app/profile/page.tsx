@@ -34,7 +34,7 @@ const Profile = () => {
               {`${data?.user.firstName} ${data?.user.lastName}`}
             </Text>
           </div>
-          <Tabs>
+          <Tabs isFitted>
             <TabList mx="8">
               <Tab fontSize={"lg"} fontWeight={"bold"}>
                 Home

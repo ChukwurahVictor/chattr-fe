@@ -1,10 +1,63 @@
+'use client'
+
+import { useAppDispatch } from "@/redux/hooks";
+import useAxios from "@/hooks/use-axios";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  SignupPayloadType,
+  loginDispatch,
+  selectAuth,
+} from "@/redux/slices/auth";
+import { useRouter } from "next/navigation";
+import { signupSchema } from "@/schema";
+import urls from "@/services/axios/urls";
+import { AuthResponseType } from "@/types/types";
+import { toast } from "react-hot-toast";
 
 const Signup = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { loading, makeRequest } = useAxios <AuthResponseType>();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(signupSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      displayName: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const submit: SubmitHandler<SignupPayloadType> = async data => {
+    if (!data) return;
+    const { data: resData, status, error } = await makeRequest({
+      payload: data,
+      method: "post",
+      url: urls.signup,
+    });
+
+    if (status === "error")
+      return toast.error(String(error) || "An error occurred signing up");
+
+    toast.success("Signup Successful!");
+
+    sessionStorage.setItem("auth-token", resData!.data.accessToken);
+    dispatch(loginDispatch(resData!.data));
+
+    router.push("/");
+  };
   return (
     <div className="flex items-center justify-center">
-      <div className="bg-gray-100 text-gray-500 shadow-xl w-full overflow-hidden">
-        <div className="md:flex w-full">
-          <div className="hidden md:block w-1/2 bg-indigo-500 py-10 px-10">
+      <div className="w-full overflow-hidden text-gray-500 bg-gray-100 shadow-xl">
+        <div className="w-full md:flex">
+          <div className="hidden w-1/2 px-10 py-10 bg-indigo-500 md:block">
             <svg
               id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641"
               data-name="Layer 1"
@@ -209,117 +262,124 @@ const Signup = () => {
               />
             </svg>
           </div>
-          <div className="w-full py-10 px-12 md:w-1/2 md:px-10">
-            <div className="text-center mb-10">
-              <h1 className="font-bold text-3xl text-gray-900">SIGN UP</h1>
+          <div className="w-full px-12 py-10 md:w-1/2 md:px-10">
+            <div className="mb-10 text-center">
+              <h1 className="text-3xl font-bold text-gray-900">SIGN UP</h1>
               <p>Enter your information to signup</p>
             </div>
-            <div>
-              <div className="flex -mx-3">
-                <div className="w-1/2 px-3 mb-5">
-                  <label htmlFor="" className="text-xs font-semibold px-1">
-                    First name
-                  </label>
-                  <div className="flex">
-                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                      <i className="mdi mdi-account-outline text-gray-400 text-lg"></i>
+            <form onSubmit={handleSubmit(submit)}>
+              <div>
+                <div className="flex -mx-3">
+                  <div className="w-1/2 px-3 mb-5">
+                    <label htmlFor="" className="px-1 text-xs font-semibold">
+                      First name
+                    </label>
+                    <div className="flex">
+                      <div className="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none">
+                        <i className="text-lg text-gray-400 mdi mdi-account-outline"></i>
+                      </div>
+                      <input
+                        type="text"
+                        className="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
+                        placeholder="John"
+                        {...register("firstName")}
+                      />
                     </div>
-                    <input
-                      type="text"
-                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="John"
-                    />
+                  </div>
+                  <div className="w-1/2 px-3 mb-5">
+                    <label htmlFor="" className="px-1 text-xs font-semibold">
+                      Last name
+                    </label>
+                    <div className="flex">
+                      <div className="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none">
+                        <i className="text-lg text-gray-400 mdi mdi-account-outline"></i>
+                      </div>
+                      <input
+                        type="text"
+                        className="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
+                        placeholder="Smith"
+                        {...register("lastName")}
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="w-1/2 px-3 mb-5">
-                  <label htmlFor="" className="text-xs font-semibold px-1">
-                    Last name
-                  </label>
-                  <div className="flex">
-                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                      <i className="mdi mdi-account-outline text-gray-400 text-lg"></i>
+                <div className="flex -mx-3">
+                  <div className="w-full px-3 mb-6">
+                    <label htmlFor="" className="px-1 text-xs font-semibold">
+                      Display Name
+                    </label>
+                    <div className="flex">
+                      <div className="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none">
+                        <i className="text-lg text-gray-400 mdi mdi-lock-outline"></i>
+                      </div>
+                      <input
+                        type="text"
+                        className="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
+                        placeholder="Nickname"
+                        {...register("displayName")}
+                      />
                     </div>
-                    <input
-                      type="text"
-                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="Smith"
-                    />
                   </div>
                 </div>
-              </div>
-              <div className="flex -mx-3">
-                <div className="w-full px-3 mb-5">
-                  <label htmlFor="" className="text-xs font-semibold px-1">
-                    Email
-                  </label>
-                  <div className="flex">
-                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                      <i className="mdi mdi-email-outline text-gray-400 text-lg"></i>
+                <div className="flex -mx-3">
+                  <div className="w-full px-3 mb-5">
+                    <label htmlFor="" className="px-1 text-xs font-semibold">
+                      Email
+                    </label>
+                    <div className="flex">
+                      <div className="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none">
+                        <i className="text-lg text-gray-400 mdi mdi-email-outline"></i>
+                      </div>
+                      <input
+                        type="email"
+                        className="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
+                        placeholder="johnsmith@example.com"
+                        {...register("email")}
+                      />
                     </div>
-                    <input
-                      type="email"
-                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="johnsmith@example.com"
-                    />
                   </div>
                 </div>
-              </div>
-              <div className="flex -mx-3">
-                <div className="w-full px-3 mb-12">
-                  <label htmlFor="" className="text-xs font-semibold px-1">
-                    Password
-                  </label>
-                  <div className="flex">
-                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                      <i className="mdi mdi-lock-outline text-gray-400 text-lg"></i>
+                <div className="flex -mx-3">
+                  <div className="w-full px-3 mb-12">
+                    <label htmlFor="" className="px-1 text-xs font-semibold">
+                      Password
+                    </label>
+                    <div className="flex">
+                      <div className="z-10 flex items-center justify-center w-10 pl-1 text-center pointer-events-none">
+                        <i className="text-lg text-gray-400 mdi mdi-lock-outline"></i>
+                      </div>
+                      <input
+                        type="password"
+                        className="w-full py-2 pl-10 pr-3 -ml-10 border-2 border-gray-200 rounded-lg outline-none focus:border-indigo-500"
+                        placeholder="************"
+                        {...register("password")}
+                      />
                     </div>
-                    <input
-                      type="password"
-                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="************"
-                    />
                   </div>
                 </div>
-              </div>
-              <div className="flex -mx-3">
-                <div className="w-full px-3 mb-12">
-                  <label htmlFor="" className="text-xs font-semibold px-1">
-                    Confirm Password
-                  </label>
-                  <div className="flex">
-                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                      <i className="mdi mdi-lock-outline text-gray-400 text-lg"></i>
-                    </div>
-                    <input
-                      type="password"
-                      className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                      placeholder="************"
-                    />
+                <div className="flex -mx-3">
+                  <div className="w-full px-3 mb-5">
+                    <button className="block w-full px-3 py-3 font-semibold text-white bg-indigo-500 rounded-lg hover:bg-indigo-700 focus:bg-indigo-700">
+                      SIGN UP
+                    </button>
                   </div>
                 </div>
+                <p className="mt-2">
+                  Already have an account?{" "}
+                  <a
+                    href="/login"
+                    className="font-semibold text-blue-500 hover:text-blue-700"
+                  >
+                    Login
+                  </a>
+                </p>
               </div>
-              <div className="flex -mx-3">
-                <div className="w-full px-3 mb-5">
-                  <button className="block w-full bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
-                    SIGN UP
-                  </button>
-                </div>
-              </div>
-              <p className="mt-2">
-                Already have an account?{" "}
-                <a
-                  href="/login"
-                  className="text-blue-500 hover:text-blue-700 font-semibold"
-                >
-                  Login
-                </a>
-              </p>
-            </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Signup
+export default Signup;

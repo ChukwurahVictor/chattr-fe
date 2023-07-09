@@ -29,8 +29,15 @@ export interface RegisterUserPayloadType {
 }
 
 export interface SigninPayloadType {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
+}
+export interface SignupPayloadType {
+  firstName: string;
+  lastName: string;
+  displayName: string;
+  email: string;
+  password: string;
 }
 
 const initialState: AuthState = {

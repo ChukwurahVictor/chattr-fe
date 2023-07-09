@@ -10,26 +10,14 @@ import { useRouter } from "next/navigation";
 import { signinSchema } from "@/schema";
 import urls from "@/services/axios/urls";
 
-type User = {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-};
-
-export type LoginResponseType = {
-  data: {
-    user: User;
-    accessToken: string;
-  };
-};
-
+import { AuthResponseType } from "@/types/types";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { loading, makeRequest } = useAxios<LoginResponseType>();
+  const { loading, makeRequest } = useAxios<AuthResponseType>();
 
   const {
     register,
@@ -54,18 +42,11 @@ const Login = () => {
       method: "post",
       url: urls.login,
     });
+    console.log(resData);
+    if (status === "error") 
+      return toast.error(String(error) || "An error occurred logging in");
 
-    if (status === "error") {
-      return showToast({
-        type: "error",
-        message: String(error) || "An error occurred logging in",
-      });
-    }
-
-    showToast({
-      type: "success",
-      message: "Login Successful!",
-    });
+    toast.success("Login Successful!");
 
     sessionStorage.setItem("auth-token", resData!.data.accessToken);
     dispatch(loginDispatch(resData!.data));

@@ -1,8 +1,12 @@
 'use client'
 
 import CustomSpinner from "@/components/custom-spinner";
+import { useAppSelector } from "@/redux/hooks";
+import { selectAuth } from "@/redux/slices/auth";
 import { useFetchSinglePost } from "@/services/swr/post";
 import { Avatar, Box, Button, Divider, Flex, Text } from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"
@@ -11,6 +15,8 @@ const SinglePost = () => {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname!.replace("/post/", "");
+
+  const { isLoggedIn, data: userData } = useAppSelector(selectAuth);
 
   const { data, isGenerating } = useFetchSinglePost(id);
   
@@ -29,6 +35,12 @@ const SinglePost = () => {
         <Button borderRadius="5px" p="10px 15px" onClick={() => router.back()}>
           Go back
         </Button>
+        {isLoggedIn && userData?.user.id === data?.author.id ? (
+          <Flex as={Button} gap={2} onClick={() => router.push(`/post/${data?.id}/edit`)}>
+            <Text>Edit</Text>
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </Flex>
+        ) : null}
       </Flex>
       {isGenerating ? (
         <CustomSpinner />

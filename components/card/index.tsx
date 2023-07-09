@@ -24,7 +24,7 @@ const PostCard = ({ author, title, body, dateTime }: PropType) => {
     <div className="container mx-auto">
       <div className="flex items-center justify-between max-w-2xl mx-8 my-4 sm:max-w-2xl lg:max-w-3xl">
         <div className="flex flex-col justify-between">
-          <div className="mb-8">
+          <div className="pr-2 mb-8">
             <div className="flex items-center gap-2 mb-1">
               <Avatar src={FrameTwo.src} size="sm" name="Jonathan Reinink" />
               <div className="flex items-center gap-1">
