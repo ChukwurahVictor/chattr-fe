@@ -11,3 +11,25 @@ export type AuthResponseType = {
     accessToken: string;
   };
 };
+
+export type PostType = {
+    id: string;
+    title: string;
+    content: string;
+    image: string;
+    author: {
+      id: string;
+      firstName: string;
+      lastName: string;
+    },
+    comments: {
+      id: string;
+      body: string;
+      userId: string;
+    }[];
+    likes: {
+      id: string;
+      userId: string
+    }[];
+    createdAt: string;
+};

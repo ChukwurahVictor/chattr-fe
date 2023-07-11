@@ -4,29 +4,17 @@ import Link from 'next/link';
 import Card from "@/components/card";
 
 import { useFetchPosts } from "@/services/swr/post";
-import { Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator, Text, VStack, StackDivider } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator, Text, VStack, StackDivider, Flex } from "@chakra-ui/react";
 import CustomSpinner from '@/components/custom-spinner';
-
-interface PostType {
-    id: string;
-    title: string;
-    content: string;
-    image?: string;
-    author: {
-        firstName: string;
-        lastName: string;
-    },
-    createdAt: string;
-}
-
+import { PostType } from '@/types/types';
 
 const Post = () => {
   const { data, isGenerating } = useFetchPosts();
 
   return (
-    <div className="w-[100%]">
+    <Flex w="100%">
       <Tabs isFitted>
-        <TabList px="8">
+        <TabList>
           <Tab fontSize={"lg"} fontWeight={"bold"}>
             For You
           </Tab>
@@ -51,13 +39,17 @@ const Post = () => {
                     {data?.map((post: PostType) => {
                       return (
                         <Link href={`/post/${post.id}`} key={post.id}>
-                          <Card
-                            author={`${post.author.firstName} ${post.author.lastName}`}
-                            title={post.title}
-                            body={`${post.content.substring(0, 150)}...`}
-                            dateTime={post?.createdAt}
-                            // image={post.image}
-                          />
+                          <Flex alignItems={'center'}>
+                            <Card
+                              author={`${post.author.firstName} ${post.author.lastName}`}
+                              title={post.title}
+                              body={`${post.content.substring(0, 150)}...`}
+                              dateTime={post?.createdAt}
+                              noOfComments={post.comments.length}
+                              noOfLikes={post.likes.length}
+                              // image={post.image}
+                            />
+                          </Flex>
                         </Link>
                       );
                     })}
@@ -82,8 +74,10 @@ const Post = () => {
                         <Card
                           author={`${post.author.firstName} ${post.author.lastName}`}
                           title={post.title}
-                          body={post.content}
+                          body={`${post.content.substring(0, 150)}...`}
                           dateTime={post.createdAt}
+                          noOfComments={post.comments.length}
+                          noOfLikes={post.likes.length}
                           // image={post.image}
                         />
                       </VStack>
@@ -97,7 +91,7 @@ const Post = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </div>
+    </Flex>
   );
 };
 

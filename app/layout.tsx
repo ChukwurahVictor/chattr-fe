@@ -1,7 +1,5 @@
 import { Providers } from "../redux/provider";
-
 import { ChakraProviders } from "./providers";
-
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar/index";
@@ -31,17 +29,17 @@ export default function RootLayout({
               toastOptions={{
                 success: {
                   style: {
-                    background: 'green',
-                    color: 'white'
-                  }
+                    background: "green",
+                    color: "white",
+                  },
                 },
                 error: {
                   style: {
-                    background: '#ab0000',
-                    color: 'white'
-                  }
-                }
-              }} 
+                    background: "#ab0000",
+                    color: "white",
+                  },
+                },
+              }}
             />
           </ChakraProviders>
         </Providers>
