@@ -3,36 +3,24 @@ import { AxiosError } from "axios";
 import urls from "../axios/urls";
 import { KeyedMutator } from "swr";
 import useSWR from "swr";
+import { PostType } from "@/types/types"
 
 export type DataType = {
-    posts: Post[];
+  posts: PostType[];
 };
 
-export const reformData = (data: DataType): Post[] =>
-    data?.posts?.map((d: Post) => ({ ...d })) || [];
-
-type Post = {
-    id: string;
-    title: string;
-    content: string;
-    image: string;
-    author: {
-      id: string;
-      firstName: string;
-      lastName: string;
-    };
-    createdAt: string;
-};
+export const reformData = (data: DataType): PostType[] =>
+         data?.posts?.map((d: PostType) => ({ ...d })) || [];
 
 export type SwrFetchReturnType = {
-    data: Post[];
-    isGenerating: boolean;
-    isError: AxiosError;
-    mutate: KeyedMutator<any>;
+  data: PostType[];
+  isGenerating: boolean;
+  isError: AxiosError;
+  mutate: KeyedMutator<any>;
 };
 
 export type SwrFetchOneReturnType = {
-  data: Post;
+  data: PostType;
 } & Omit<SwrFetchReturnType, "data">;
 
 export const useFetchPosts = (params?: PostReqParams): SwrFetchReturnType => {

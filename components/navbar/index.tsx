@@ -17,6 +17,7 @@ import {
   Container,
   Text,
 } from "@chakra-ui/react";
+import { toast } from "react-hot-toast";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
@@ -34,13 +35,14 @@ const Navbar = () => {
   const handleLogout = () => {
     sessionStorage.removeItem("auth-token");
     dispatch(logoutDispatch());
+    toast.success('Logged out successfully!');
 
     router.push("/login");
   };
 
   return (
     <>
-      <Box bg="white" px={4} w="full">
+      <Box bg="#fff" px={4} w="full">
         <Container mx="auto" maxW="8xl">
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <HStack spacing={8} alignItems={"center"}>
@@ -55,8 +57,7 @@ const Navbar = () => {
               {isLoggedIn ? (
                 <Flex gap="2" alignItems="center">
                   <Link href="/post/new" style={{ textDecoration: "none" }}>
-                    <FontAwesomeIcon icon={faPenToSquare} /> {" "}
-                    Write
+                    <FontAwesomeIcon icon={faPenToSquare} /> Write
                   </Link>
                   <Menu>
                     <MenuButton
@@ -93,9 +94,9 @@ const Navbar = () => {
               ) : (
                 <Flex fontSize="16px" gap="2" alignItems="center">
                   <Button
-                    border="1px solid indigo"
-                    bg="#F1FAFF"
-                    color="indigo.500"
+                    border="1px solid #6c63ff"
+                    bg="#fff"
+                    color="#6c63ff"
                     borderRadius="5px"
                     p="10px 15px"
                   >
@@ -104,8 +105,8 @@ const Navbar = () => {
                     </Link>
                   </Button>
                   <Button
-                    // bg="indigo"
-                    // color="white"
+                    bg="#6c63ff"
+                    color="white"
                     borderRadius="5px"
                     p="10px 15px"
                   >

@@ -1,13 +1,21 @@
+import { Tag, TagLabel } from '@chakra-ui/react';
+
 interface PropType {
     name: string
 }
 
-const Tag = ({ name }: PropType) => {
+const Pill = ({ name }: PropType) => {
   return (
-    <div className="bg-[#C6C6C6] justify-center items-center rounded-3xl">
-      <p className="p-1">{name}</p>
-    </div>
+    <Tag
+      size={"lg"}
+      key={"lg"}
+      borderRadius="full"
+      variant="solid"
+      colorScheme="purple"
+    >
+      <TagLabel>{name}</TagLabel>
+    </Tag>
   );
 }
 
-export default Tag
+export default Pill;

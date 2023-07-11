@@ -19,7 +19,7 @@ const SideMenu = () => {
           <>
             { data?.length > 0 ? 
               <>
-                <Flex gap={"2"} flexWrap={"wrap"}>
+                <Flex gap={"2"} mt="2" flexWrap={"wrap"}>
                   { data?.map((tag: any, index: number) => {
                     return (
                       <div key={index}>

@@ -1,6 +1,6 @@
 export const baseURL = "https://chatter-be.onrender.com";
 
-const urls = {  
+const urls = {
   // Auth
   login: `${baseURL}/auth/login`,
   signup: `${baseURL}/auth/signup`,
@@ -9,7 +9,7 @@ const urls = {
   // Users
   fetchUsersUrl: `${baseURL}/users`,
   fetchSingleUserUrl: (id: string) => `${baseURL}/users/${id}`,
-  
+
   // Posts
   fetchPostsUrl: `${baseURL}/posts`,
   fetchSinglePostsUrl: (id: string) => `${baseURL}/posts/${id}`,

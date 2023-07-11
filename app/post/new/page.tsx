@@ -4,16 +4,14 @@ import { Box, Input , Button, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useAxios from "@/hooks/use-axios";
-import { showToast } from "@/utils/show-toast";
 import urls from "@/services/axios/urls";
 import { useAppSelector } from "@/redux/hooks";
 import { selectAuth } from "@/redux/slices/auth";
 import MdEditor from "react-markdown-editor-lite";
 const MarkdownIt = require("markdown-it");
+import { toast } from "react-hot-toast";
 
 import "react-markdown-editor-lite/lib/index.css";
-
-// import { useState, Component } from "react";
 
 const NewPost = () => {
   const router = useRouter();
@@ -39,18 +37,10 @@ const NewPost = () => {
       url: urls.fetchPostsUrl,
     });
 
-    if (status === "error") {
-      return showToast({
-        type: "error",
-        message: String(error) || "An error occurred",
-      });
-    }
+    if (status === "error")
+      return toast.error(String(error) || "An error occurred")
 
-    showToast({
-      type: "success",
-      message: "Post created successfully.",
-    });
-
+    toast.success("Post created successfully.");
     router.push("/");
   }
 
@@ -72,7 +62,8 @@ const NewPost = () => {
         <Button
           borderRadius="5px"
           p="10px 15px"
-          bg={"indigo.500"}
+          bg="#6c63ff"
+          color="#fff"
           // disabled={ !content || !title }
           onClick={() => {
             submit();

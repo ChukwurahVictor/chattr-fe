@@ -5,7 +5,7 @@ import { KeyedMutator } from "swr";
 import useSWR from "swr";
 
 export type DataType = {
-    users: User[];
+  users: User[];
 };
 
 export const reformData = (data: DataType): User[] =>

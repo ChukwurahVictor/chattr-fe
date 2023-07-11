@@ -12,10 +12,14 @@ import {
   TabIndicator,
   Avatar,
   Text,
+  Flex,
+  Box,
+  Container,
 } from "@chakra-ui/react";
 
 import Card from "@/components/card";
 import Following from "@/components/following";
+import { PostType } from "@/types/types";
 // import Link from "next/link";
 
 const Library = () => {
@@ -24,15 +28,15 @@ const Library = () => {
   // console.log(userData);
   
   return (
-    <div className="container max-w-6xl mx-auto">
-      <div className="flex justify-between">
-        <div className="py-[62px] px-[20px]">
-          <div className="flex items-center gap-2 mb-[40px]">
+    <Container maxW="6xl" mx="auto">
+      <Flex justify="space-between">
+        <Box py="62px" px="20px" w="full">
+          <Flex alignItems="center" gap="2" mb="40px">
             <Text fontSize={"48px"} fontWeight={"bold"}>
               Your Library
             </Text>
-          </div>
-          <Tabs>
+          </Flex>
+          <Tabs isFitted>
             <TabList mx="8">
               <Tab fontSize={"lg"} fontWeight={"bold"}>
                 Your List
@@ -51,7 +55,7 @@ const Library = () => {
               <TabPanel>
                 {userData?.posts.length > 0 ? (
                   <>
-                    {userData?.posts?.map((post: any) => {
+                    {userData?.posts?.map((post: PostType) => {
                       return (
                         <div key={post.id}>
                           <Card
@@ -59,6 +63,8 @@ const Library = () => {
                             title={post.title}
                             body={post.content}
                             dateTime={post.createdAt}
+                            noOfComments={post.comments.length}
+                            noOfLikes={post.likes.length}
                             // image={post.image}
                           />
                         </div>
@@ -72,7 +78,7 @@ const Library = () => {
               <TabPanel>
                 {userData?.posts.length > 0 ? (
                   <>
-                    {userData?.posts?.map((post: any) => {
+                    {userData?.posts?.map((post: PostType) => {
                       return (
                         <div key={post.id}>
                           <Card
@@ -80,6 +86,8 @@ const Library = () => {
                             title={post.title}
                             body={post.content}
                             dateTime={post.createdAt}
+                            noOfComments={post.comments.length}
+                            noOfLikes={post.likes.length}
                           />
                         </div>
                       );
@@ -91,12 +99,12 @@ const Library = () => {
               </TabPanel>
             </TabPanels>
           </Tabs>
-        </div>
-        <div className="hidden lg:block">
+        </Box>
+        <Flex display={{ base:"none", lg:"block" }}>
           <Following />
-        </div>
-      </div>
-    </div>
+        </Flex>
+      </Flex>
+    </Container>
   );
 };
 

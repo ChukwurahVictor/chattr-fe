@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link";
 import Card from "@/components/card";
 import {
   Tabs,
@@ -11,21 +10,25 @@ import {
   TabIndicator,
   Avatar,
   Text,
+  Flex,
+  Box,
+  Container,
 } from "@chakra-ui/react";
 import Following from "@/components/following";
 import { useAppSelector } from "@/redux/hooks";
 import { selectAuth } from "@/redux/slices/auth";
+import { PostType } from "@/types/types";
+import { useFetchSingleUser } from "@/services/swr/user";
 
 const Profile = () => {
   const { data } = useAppSelector(selectAuth);
-  console.log(data);
+  const { data: userData } = useFetchSingleUser(data?.user?.id);
 
   return (
-    <div className="container max-w-6xl mx-auto">
-      <div className="flex justify-between">
-        <div className="py-[62px] px-[20px]">
-          {/* <div className="flex flex-col max-w-2xl mx-8 my-4 sm:max-w-2xl lg:max-w-6xl"> */}
-          <div className="flex items-center gap-2 mb-[40px]">
+    <Container maxW="6xl" mx="auto">
+      <Flex justify="space-between">
+        <Box py="62px" px="20px" w="full">
+          <Flex alignItems="center" gap="2" mb="40px">
             <Avatar
               name={`${data?.user.firstName} ${data?.user.lastName}`}
               size={{ base: "md", lg: "lg" }}
@@ -33,7 +36,7 @@ const Profile = () => {
             <Text fontSize={"48px"} fontWeight={"bold"}>
               {`${data?.user.firstName} ${data?.user.lastName}`}
             </Text>
-          </div>
+          </Flex>
           <Tabs isFitted>
             <TabList mx="8">
               <Tab fontSize={"lg"} fontWeight={"bold"}>
@@ -51,31 +54,59 @@ const Profile = () => {
             />
             <TabPanels>
               <TabPanel>
-                One
-                {/* {data?.map((post: PostType) => {
-                  return ( */}
-                {/* <Link href={`/post/${post.id}`} key={post.id}>
-                  <Card
-                    author={`${post.author.firstName} ${post.author.lastName}`}
-                    title={post.title}
-                    body={post.content}
-                  />
-                </Link> */}
-                {/* );
-                })} */}
+                {userData?.posts.length > 0 ? (
+                  <>
+                    {userData?.posts?.map((post: PostType) => {
+                      return (
+                        <div key={post.id}>
+                          <Card
+                            author={`${post.author?.firstName} ${post.author?.lastName}`}
+                            title={post.title}
+                            body={post.content}
+                            dateTime={post.createdAt}
+                            noOfComments={post.comments.length}
+                            noOfLikes={post.likes.length}
+                            // image={post.image}
+                          />
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <Text>No posts</Text>
+                )}
               </TabPanel>
               <TabPanel>
-                {/* <Card /> */}
-                Two
+                {userData?.posts.length > 0 ? (
+                  <>
+                    {userData?.posts?.map((post: PostType) => {
+                      return (
+                        <div key={post.id}>
+                          <Card
+                            author={`${post.author?.firstName} ${post.author?.lastName}`}
+                            title={post.title}
+                            body={post.content}
+                            dateTime={post.createdAt}
+                            noOfComments={post.comments.length}
+                            noOfLikes={post.likes.length}
+                            // image={post.image}
+                          />
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <Text>No posts</Text>
+                )}
               </TabPanel>
             </TabPanels>
           </Tabs>
-        </div>
+        </Box>
         <div className="hidden lg:block">
           <Following />
         </div>
-      </div>
-    </div>
+      </Flex>
+    </Container>
   );
 };
 

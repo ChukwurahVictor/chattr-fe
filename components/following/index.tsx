@@ -16,10 +16,20 @@ const Following = () => {
         <Tabs isFitted>
           <TabList mx="8">
             <Tab fontSize={"lg"} fontWeight={"bold"}>
-              Followers
+              <Flex gap="2">
+                <Text>Followers</Text>
+                <Text bg="lightgray" borderRadius="full" px="2">
+                  {userData?.followedBy.length}
+                </Text>
+              </Flex>
             </Tab>
             <Tab fontSize={"lg"} fontWeight={"bold"}>
-              Following
+              <Flex gap="2">
+                <Text>Following</Text>
+                <Text bg="lightgray" borderRadius="full" px="2">
+                  {userData?.following.length}
+                </Text>
+              </Flex>
             </Tab>
           </TabList>
           <TabIndicator
