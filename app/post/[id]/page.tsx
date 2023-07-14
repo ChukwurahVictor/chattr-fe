@@ -10,15 +10,42 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"
+import { useFetchFollowing } from "@/services/swr/follows";
+import useAxios from "@/hooks/use-axios";
+import urls from "@/services/axios/urls";
+import { toast } from "react-hot-toast";
 
 const SinglePost = () => {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname!.replace("/post/", "");
 
+  const { makeRequest } = useAxios();
+
   const { isLoggedIn, data: userData } = useAppSelector(selectAuth);
 
   const { data, isGenerating } = useFetchSinglePost(id);
+  const { data: followingData, mutate } = useFetchFollowing(userData?.user.id);
+
+  const handleFollow = async (authorId: string) => {
+    console.log('Trying to follow an author');
+
+    const { data: resData, status, error } = await makeRequest({
+      payload: { followerId: userData?.user.id, followingId: authorId },
+      method: "post",
+      url: urls.followsUrl,
+    });
+
+    if (status === "error")
+      return toast.error(String(error) || "An error occurred");
+
+    toast.success("Author followed successfully.");
+    mutate();
+  }
+
+  const handleUnFollow = () => {
+    console.log('Unfollowing author');
+  }
   
   return (
     <Box
@@ -36,7 +63,12 @@ const SinglePost = () => {
           Go back
         </Button>
         {isLoggedIn && userData?.user.id === data?.author.id ? (
-          <Flex as={Button} gap={2} onClick={() => router.push(`/post/${data?.id}/edit`)}>
+          <Flex
+            as={Button}
+            gap={2}
+            sx={{ cursor: "pointer" }}
+            onClick={() => router.push(`/post/${data?.id}/edit`)}
+          >
             <Text>Edit</Text>
             <FontAwesomeIcon icon={faPenToSquare} />
           </Flex>
@@ -55,12 +87,57 @@ const SinglePost = () => {
                 size={"sm"}
                 name={`${data?.author.firstName} ${data?.author.lastName}`}
               />
-              <Text fontWeight={"semibold"}>
+              <Text
+                fontWeight={"semibold"}
+                sx={{ cursor: "pointer" }}
+                onClick={() => router.push(`/author/${data?.author.id}`)}
+              >
                 {data?.author.firstName} {data?.author.lastName}
               </Text>
-              <Text color="purple.500" fontSize={"sm"}>
-                follow
-              </Text>
+              {isLoggedIn && userData?.user.id !== data?.author.id ? (
+                <>
+                  {followingData?.length > 0 ? (
+                    <>
+                      {followingData?.map((following: any) => {
+                        return (
+                          <>
+                            {following?.id !== data?.author.id ? (
+                              <>
+                                <Text
+                                  color="#6c63ff"
+                                  fontSize={"sm"}
+                                  sx={{ cursor: "pointer" }}
+                                  onClick={() => handleFollow(data?.author.id)}
+                                >
+                                  follow
+                                </Text>
+                              </>
+                            ) : (
+                              <Text
+                                color="#6c63ff"
+                                fontSize={"sm"}
+                                sx={{ cursor: "pointer" }}
+                                onClick={() => handleUnFollow()}
+                              >
+                                unfollow
+                              </Text>
+                            )}
+                          </>
+                        );
+                      })}{" "}
+                    </>
+                  ) : (
+                    <Text
+                      color="#6c63ff"
+                      fontSize={"sm"}
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => handleFollow(data?.author.id)}
+                    >
+                      follow
+                    </Text>
+                  )}
+                </>
+              ) : null}
             </Flex>
           </Flex>
           <Divider
