@@ -1,4 +1,5 @@
-export const baseURL = "https://chatter-be.onrender.com";
+// export const baseURL = "https://chatter-be.onrender.com";
+export const baseURL = "http://localhost:3000";
 
 const urls = {
   // Auth
@@ -17,5 +18,10 @@ const urls = {
   // Categories
   fetchCategoriesUrl: `${baseURL}/categories`,
   fetchSingleCategoryUrl: (id: string) => `${baseURL}/categories/${id}`,
+
+  // Follows
+  followsUrl: `${baseURL}/follows`,
+  fetchFollowersUrl: (id: string) => `${baseURL}/follows/${id}/followers`,
+  fetchFollowingUrl: (id: string) => `${baseURL}/follows/${id}/following`,
 };
 export default urls;

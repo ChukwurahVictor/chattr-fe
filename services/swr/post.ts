@@ -10,7 +10,7 @@ export type DataType = {
 };
 
 export const reformData = (data: DataType): PostType[] =>
-         data?.posts?.map((d: PostType) => ({ ...d })) || [];
+  data?.posts?.map((d: PostType) => ({ ...d })) || [];
 
 export type SwrFetchReturnType = {
   data: PostType[];

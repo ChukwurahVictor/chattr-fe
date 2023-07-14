@@ -1,7 +1,6 @@
 import { Tag, TagLabel } from '@chakra-ui/react';
-
 interface PropType {
-    name: string
+  name: string;
 }
 
 const Pill = ({ name }: PropType) => {

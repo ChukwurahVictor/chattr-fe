@@ -93,7 +93,7 @@ const NewPost = () => {
         renderHTML={text => mdParser.render(text)}
         onChange={handleEditorChange}
         view={{ menu: true, md: true, html: false }}
-        placeholder="| Write an Article..."
+        placeholder=" | Write an Article..."
       />
     </Box>
   );

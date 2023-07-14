@@ -3,6 +3,10 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
+  displayName: string;
+  followedBy: any;
+  following: any;
+  posts: any;
 };
 
 export type AuthResponseType = {
@@ -33,3 +37,17 @@ export type PostType = {
     }[];
     createdAt: string;
 };
+
+export type Category = {
+  id: string;
+  name: string;
+  posts: PostType[];
+};
+
+export type FollowType = {
+  id: string;
+  followerId: string;
+  followingId: string;
+  follower: string;
+  following: string;
+}

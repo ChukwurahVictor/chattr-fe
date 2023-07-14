@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import urls from "../axios/urls";
 import { KeyedMutator } from "swr";
 import useSWR from "swr";
+import { Category } from "@/types/types";
 
 export type DataType = {
   categories: Category[];
@@ -10,11 +11,6 @@ export type DataType = {
 
 export const reformData = (data: DataType): Category[] =>
   data?.categories?.map((d: Category) => ({ ...d })) || [];
-
-type Category = {
-  id: string;
-  name: string;
-};
 
 export type SwrFetchReturnType = {
   data: Category[];

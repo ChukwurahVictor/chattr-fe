@@ -25,7 +25,6 @@ import { PostType } from "@/types/types";
 const Library = () => {
   const { data } = useAppSelector(selectAuth);
   const { data: userData } = useFetchSingleUser(data?.user?.id);
-  // console.log(userData);
   
   return (
     <Container maxW="6xl" mx="auto">

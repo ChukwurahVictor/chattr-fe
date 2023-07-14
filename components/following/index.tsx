@@ -44,9 +44,12 @@ const Following = () => {
                 <>
                   {userData?.followedBy?.map((followers: any) => {
                     return (
-                      <Flex gap={"2"} key={followers.id}>
-                        <Avatar size={"sm"} name="Victor Chukwurah" />
-                        <Text>{followers.firstName}</Text>
+                      <Flex gap={"2"} key={followers.follower.id} alignItems={"center"}>
+                        <Avatar size={"sm"} name={`${followers.follower.firstName} ${followers.follower.lastName}`} />
+                        <Text>
+                          {followers.follower.firstName}{" "}
+                          {followers.follower.lastName}
+                        </Text>
                       </Flex>
                     );
                   })}
@@ -60,18 +63,21 @@ const Following = () => {
                 <>
                   {userData?.following?.map((following: any) => {
                     return (
-                      <Flex gap={"2"} key={following.id}>
+                      <Flex gap={"2"} key={following.following.id}>
                         <Avatar
                           size={"sm"}
-                          name={`${following.firstName} ${following.lastName}`}
+                          name={`${following.following.firstName} ${following.following.lastName}`}
                         />
-                        <Text>{following.firstName}</Text>
+                        <Text>
+                          {following.following.firstName}{" "}
+                          {following.following.lastName}
+                        </Text>
                       </Flex>
                     );
                   })}
                 </>
               ) : (
-                <Text>Not following anyone yet</Text>
+                <Text>You're not following anyone yet</Text>
               )}
             </TabPanel>
           </TabPanels>
