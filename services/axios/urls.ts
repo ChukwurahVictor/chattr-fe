@@ -1,4 +1,4 @@
-export const baseURL = "https://chatter-be.onrender.com";
+export const baseURL = /*"https://chatter-be.onrender.com"*/"http://localhost:3000";
 
 const urls = {
   // Auth

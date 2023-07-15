@@ -27,7 +27,7 @@ axios.interceptors.response.use(
     return res;
   },
   async (error: any) => {
-    if (error instanceof AxiosError && error.response?.status === 401) {
+    if (error instanceof AxiosError && error.response?.status === 401 && error.response.data.message !== "Invalid password") {
       toast.error("Unauthorized, Please login to continue.");
       // history.replace(`/login`);
     }

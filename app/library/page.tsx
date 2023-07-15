@@ -31,7 +31,7 @@ const Library = () => {
       <Flex justify="space-between">
         <Box py="62px" px="20px" w="full">
           <Flex alignItems="center" gap="2" mb="40px">
-            <Text fontSize={"48px"} fontWeight={"bold"}>
+            <Text fontSize={{ base: "36px", lg: "48px"}} fontWeight={"bold"}>
               Your Library
             </Text>
           </Flex>
