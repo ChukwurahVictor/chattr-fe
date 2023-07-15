@@ -22,13 +22,13 @@ const Author = () => {
     return (
       <Container maxW="6xl" mx="auto">
         <Flex justify="space-between">
-          <Box py="62px" px="20px" w="75%">
+          <Box py="62px" px="20px" w={{base: "100%", lg: "75%"}}>
             <Flex alignItems="center" gap="2" mb="40px">
               <Avatar
                 name={`${data?.firstName} ${data?.lastName}`}
                 size={{ base: "md", lg: "lg" }}
               />
-              <Text fontSize={"48px"} fontWeight={"bold"}>
+              <Text fontSize={{ base: "36px", md: "48px" }} fontWeight={"bold"}>
                 {`${data?.firstName} ${data?.lastName}`}
               </Text>
             </Flex>

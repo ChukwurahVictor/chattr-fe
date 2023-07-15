@@ -32,7 +32,12 @@ const NewPost = () => {
     // if (content !== "" && title !== "") return;
 
     const { data, status, error } = await makeRequest({
-      payload: { title: title, content: content, authorId: user.user.id },
+      payload: {
+        title: title,
+        content: content,
+        authorId: user.user.id,
+        image: "https://www.npmjs.com//",
+      },
       method: "post",
       url: urls.fetchPostsUrl,
     });

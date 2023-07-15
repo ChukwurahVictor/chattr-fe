@@ -102,9 +102,9 @@ const Profile = () => {
             </TabPanels>
           </Tabs>
         </Box>
-        <div className="hidden lg:block">
+        <Flex display={{ base: "none", lg: "block" }}>
           <Following />
-        </div>
+        </Flex>
       </Flex>
     </Container>
   );

@@ -44,7 +44,7 @@ const Following = () => {
                 <>
                   {userData?.followedBy?.map((followers: any) => {
                     return (
-                      <Flex gap={"2"} key={followers.follower.id} alignItems={"center"}>
+                      <Flex gap={"2"} mt="2" key={followers.follower.id} alignItems={"center"}>
                         <Avatar size={"sm"} name={`${followers.follower.firstName} ${followers.follower.lastName}`} />
                         <Text>
                           {followers.follower.firstName}{" "}
@@ -63,7 +63,7 @@ const Following = () => {
                 <>
                   {userData?.following?.map((following: any) => {
                     return (
-                      <Flex gap={"2"} key={following.following.id}>
+                      <Flex gap={"2"} mt="2" key={following.following.id} alignItems={"center"}>
                         <Avatar
                           size={"sm"}
                           name={`${following.following.firstName} ${following.following.lastName}`}
