@@ -4,9 +4,13 @@ import CustomSpinner from "@/components/custom-spinner";
 import { useAppSelector } from "@/redux/hooks";
 import { selectAuth } from "@/redux/slices/auth";
 import { useFetchSinglePost } from "@/services/swr/post";
-import { Avatar, Box, Button, Divider, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Box, Button, Divider, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, Input, Text, Textarea, useDisclosure } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import {
+  faPenToSquare,
+  faHeart,
+  faComment,
+} from "@fortawesome/free-regular-svg-icons";
 import { usePathname, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"
@@ -14,11 +18,17 @@ import { useFetchFollowing } from "@/services/swr/follows";
 import useAxios from "@/hooks/use-axios";
 import urls from "@/services/axios/urls";
 import { toast } from "react-hot-toast";
+import Tag from "@/components/pill";
+import { useRef, useState } from "react";
+import { kFormatter } from "@/utils/likeFormatter";
+import moment from "moment";
 
 const SinglePost = () => {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname!.replace("/post/", "");
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = useRef<any>()
 
   const { makeRequest } = useAxios();
 
@@ -26,6 +36,12 @@ const SinglePost = () => {
 
   const { data, isGenerating } = useFetchSinglePost(id);
   const { data: followingData, mutate } = useFetchFollowing(userData?.user.id);
+  const [commentBody, setCommentBody] = useState("");
+
+  const handleInputChange = (e: any) => {
+    let inputValue = e.target.value;
+    setCommentBody(inputValue);
+  };
 
   const handleFollow = async (authorId: string) => {
     console.log('Trying to follow an author');
@@ -100,7 +116,7 @@ const SinglePost = () => {
                     <>
                       {followingData?.map((following: any) => {
                         return (
-                          <>
+                          <Box key={following.id}>
                             {following?.id !== data?.author.id ? (
                               <>
                                 <Text
@@ -122,7 +138,7 @@ const SinglePost = () => {
                                 unfollow
                               </Text>
                             )}
-                          </>
+                          </Box>
                         );
                       })}{" "}
                     </>
@@ -146,9 +162,106 @@ const SinglePost = () => {
             alignItems="center"
             my="50px"
           />
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {data?.content}
-          </ReactMarkdown>
+          <Box mb="40px">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {data?.content}
+            </ReactMarkdown>
+          </Box>
+          <Flex justify="space-between" alignItems="center">
+            <Flex gap="2" alignItems="center">
+              <Text>
+                <FontAwesomeIcon icon={faHeart} /> {0}
+              </Text>
+              <Text
+                sx={{ cursor: "pointer" }}
+                ref={btnRef}
+                colorScheme="teal"
+                onClick={onOpen}
+              >
+                <FontAwesomeIcon icon={faComment} /> {data?.comments.length}
+              </Text>
+            </Flex>
+            <Box sx={{ cursor: "pointer" }} gap="4">
+              <Tag name="Politics" /> <Tag name="Education" />{" "}
+              <Tag name="Science" />
+            </Box>
+            <Drawer
+              isOpen={isOpen}
+              placement="right"
+              size="sm"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Comments</DrawerHeader>
+
+                <DrawerBody>
+                  <Flex alignItems={"center"} gap="2" my="4">
+                    <Avatar
+                      size={"sm"}
+                      name={`${userData?.user.firstName} ${userData?.user.lastName}`}
+                    />
+                    <Text fontWeight={"semibold"}>
+                      {userData?.user.firstName} {userData?.user.lastName}
+                    </Text>
+                  </Flex>
+                  <Textarea
+                    value={commentBody}
+                    onChange={handleInputChange}
+                    placeholder="Write your comment..."
+                    size="sm"
+                  />
+                  <Flex mt="4" justify="end">
+                    <Button colorScheme="purple" borderRadius="full">
+                      Comment
+                    </Button>
+                  </Flex>
+                  <Divider
+                    border="0.2px solid #9D9D9D"
+                    alignItems="center"
+                    my="50px"
+                  />
+                  <Box>
+                    { data?.comments.length > 0 ? (
+                    <>
+                      {data?.comments.map((comment: any) => {
+                        return (
+                          <>
+                            <Box>
+                              <Flex alignItems={"center"} gap="2" my="4">
+                                <Avatar
+                                  size={"sm"}
+                                  name={`${comment?.user.firstName} ${comment?.user.lastName}`}
+                                />
+                                <Flex flexDir="column">
+                                  <Text fontWeight={"semibold"}>
+                                    {comment?.user.firstName}{" "}
+                                    {comment?.user.lastName}
+                                  </Text>
+                                  <Text>
+                                    {moment(comment.createdAt)
+                                      .fromNow(true)
+                                      .replace("minutes", "hours")}{" "}
+                                    ago
+                                  </Text>
+                                </Flex>
+                              </Flex>
+                              <Text>{comment.body}</Text>
+                            </Box>
+                          </>
+                        );
+                      })}
+                    </>
+                      ) : 
+                      <Text>No comments</Text>
+                    } 
+                  </Box>
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          </Flex>
         </>
       )}
     </Box>

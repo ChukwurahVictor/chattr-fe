@@ -33,7 +33,7 @@ const Profile = () => {
               name={`${data?.user.firstName} ${data?.user.lastName}`}
               size={{ base: "md", lg: "lg" }}
             />
-            <Text fontSize={"48px"} fontWeight={"bold"}>
+            <Text fontSize={{ base: "36px", md: "48px"}} fontWeight={"bold"}>
               {`${data?.user.firstName} ${data?.user.lastName}`}
             </Text>
           </Flex>
