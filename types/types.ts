@@ -30,6 +30,12 @@ export type PostType = {
       id: string;
       body: string;
       userId: string;
+      user: {
+        firstName: string;
+        lastName: string;
+        displayName: string;
+      },
+      createdAt: string;
     }[];
     likes: {
       id: string;

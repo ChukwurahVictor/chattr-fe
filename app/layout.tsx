@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/navbar/index";
 import { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
         <Providers>
           <ChakraProviders>
             <Navbar />
-            {children}
+              <Suspense fallback={<p>Loading...</p>}>
+                {children}
+              </Suspense>
             <Toaster
               position="top-right"
               toastOptions={{
