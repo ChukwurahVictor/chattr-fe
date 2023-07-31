@@ -22,5 +22,8 @@ const urls = {
   followsUrl: `${baseURL}/follows`,
   fetchFollowersUrl: (id: string) => `${baseURL}/follows/${id}/followers`,
   fetchFollowingUrl: (id: string) => `${baseURL}/follows/${id}/following`,
+
+  // Comments
+  commentsUrl: `${baseURL}/comments`
 };
 export default urls;

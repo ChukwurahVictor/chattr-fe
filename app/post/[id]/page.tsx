@@ -30,11 +30,11 @@ const SinglePost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef<any>()
 
-  const { makeRequest } = useAxios();
+  const { loading, makeRequest } = useAxios();
 
   const { isLoggedIn, data: userData } = useAppSelector(selectAuth);
 
-  const { data, isGenerating } = useFetchSinglePost(id);
+  const { data, isGenerating, mutate: postMutate } = useFetchSinglePost(id);
   const { data: followingData, mutate } = useFetchFollowing(userData?.user.id);
   const [commentBody, setCommentBody] = useState("");
 
@@ -44,9 +44,7 @@ const SinglePost = () => {
   };
 
   const handleFollow = async (authorId: string) => {
-    console.log('Trying to follow an author');
-
-    const { data: resData, status, error } = await makeRequest({
+    const { status, error } = await makeRequest({
       payload: { followerId: userData?.user.id, followingId: authorId },
       method: "post",
       url: urls.followsUrl,
@@ -60,7 +58,22 @@ const SinglePost = () => {
   }
 
   const handleUnFollow = () => {
-    console.log('Unfollowing author');
+    console.log('Unfollowing author...');
+  }
+
+  const handleComment = async () => { 
+    const { status, error } = await makeRequest({
+      payload: { postId: id, body: commentBody, userId: userData?.user.id },
+      method: "post",
+      url: urls.commentsUrl,
+    });
+
+    if (status === "error")
+      return toast.error(String(error) || "An error occurred");
+
+    toast.success("Comment posted successfully.");
+    postMutate();
+    setCommentBody("");
   }
   
   return (
@@ -69,7 +82,7 @@ const SinglePost = () => {
       mx="auto"
       px="20px"
       mt="4"
-      h="400px"
+      // h="400px"
       borderRadius="lg"
       overflow="hidden"
       alignItems={"center"}
@@ -214,7 +227,14 @@ const SinglePost = () => {
                     size="sm"
                   />
                   <Flex mt="4" justify="end">
-                    <Button colorScheme="purple" borderRadius="full">
+                    <Button
+                      colorScheme="purple"
+                      borderRadius="full"
+                      type="submit"
+                      isDisabled={loading}
+                      isLoading={loading}
+                      onClick={handleComment}
+                    >
                       Comment
                     </Button>
                   </Flex>
@@ -240,11 +260,9 @@ const SinglePost = () => {
                                     {comment?.user.firstName}{" "}
                                     {comment?.user.lastName}
                                   </Text>
-                                  <Text>
+                                  <Text fontSize={'.8rem'}>
                                     {moment(comment.createdAt)
-                                      .fromNow(true)
-                                      .replace("minutes", "hours")}{" "}
-                                    ago
+                                      .format('MMMM DD')}
                                   </Text>
                                 </Flex>
                               </Flex>

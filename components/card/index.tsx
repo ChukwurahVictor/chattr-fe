@@ -43,12 +43,9 @@ const PostCard = ({
         <CardBody>
           <Flex alignItems={"center"} gap="2">
             <Avatar name="John Wick" size="sm" />
-            <Text fontWeight={"semibold"}>{author}</Text> {"."}
-            <Text>
-              {moment(dateTime)
-                .fromNow(true)
-                .replace("minutes", "hours")}{" "}
-              ago
+            <Text fontWeight={"semibold"}>{author}</Text> {" . "}
+            <Text fontSize={{ base: ".9rem", md: "1.2rem"}}>
+              {moment(dateTime).fromNow(true).replace("minutes", "hours")} ago
             </Text>
           </Flex>
           <Heading size="md" mt="2">
@@ -78,6 +75,7 @@ const PostCard = ({
         src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
         alt="Caffe Latte"
         alignSelf={"center"}
+        paddingBottom={{ base: "10px", md: "none" }}
       />
     </Card>
   );

@@ -28,7 +28,7 @@ const Category = () => {
             Go back
           </Button>
           <Flex justify="center" gap="2" my="40px" flexDir={"column"}>
-            <Text fontSize={"48px"} fontWeight={"bold"}>
+            <Text fontSize={{ base: "28px", lg: "48px" }} fontWeight={"bold"}>
               {data?.name}
             </Text>
             <Flex flexDir={"column"} mt="40px" gap="2">
