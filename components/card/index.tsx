@@ -42,10 +42,10 @@ const PostCard = ({
       <Stack>
         <CardBody>
           <Flex alignItems={"center"} gap="2">
-            <Avatar name="John Wick" size="sm" />
+            <Avatar name={author} size="sm" />
             <Text fontWeight={"semibold"}>{author}</Text> {" . "}
-            <Text fontSize={{ base: ".9rem", md: "1.2rem"}}>
-              {moment(dateTime).fromNow(true).replace("minutes", "hours")} ago
+            <Text fontSize={{ base: ".9rem" }}>
+              {moment(dateTime).fromNow()}
             </Text>
           </Flex>
           <Heading size="md" mt="2">
@@ -71,7 +71,7 @@ const PostCard = ({
         objectFit="cover"
         // maxW={{ base: "100%", sm: "200px" }}
         h="150px"
-        w="150px"
+        w={{ base: "250px", sm: "150px" }}
         src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
         alt="Caffe Latte"
         alignSelf={"center"}
@@ -82,46 +82,3 @@ const PostCard = ({
 };
 
 export default PostCard
-
-// <div className="container mx-auto">
-  //   <div className="flex items-center justify-between max-w-2xl mx-8 my-4 sm:max-w-2xl lg:max-w-3xl">
-  //     <div className="flex flex-col justify-between">
-  //       <div className="pr-2 mb-8">
-  //         <div className="flex items-center gap-2 mb-1">
-  //           <Avatar src={FrameTwo.src} size="sm" name="Jonathan Reinink" />
-  //           <div className="flex items-center gap-1">
-  //             <p className="font-medium leading-none text-gray-900">
-  //               {author}
-  //             </p>
-  //             {" . "}
-  //             <p className="text-sm">
-  //               {moment(dateTime)
-  //                 .fromNow(true)
-  //                 .replace("minutes", "hours")}{" "}
-  //               ago
-  //             </p>
-  //           </div>
-  //         </div>
-  //         <div className="mb-2 base:text-[20px] lg:text-[28px] font-bold text-gray-900">
-  //           {title}
-  //         </div>
-  //         <ReactMarkdown>{body}</ReactMarkdown>
-  //       </div>
-  //       <div className="flex gap-2 text-sm">
-  //         <p>
-  //           <FontAwesomeIcon icon={faHeart} /> 5k
-  //         </p>
-  //         <p>
-  //           <FontAwesomeIcon icon={faComment} /> 71
-  //         </p>
-  //       </div>
-  //     </div>
-  //     <Image
-  //       className="hidden md:block md:w-36 md:h-36"
-  //       src={FrameOne.src}
-  //       width={50}
-  //       height={30}
-  //       alt="img"
-  //     />
-  //   </div>
-  // </div>

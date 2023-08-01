@@ -262,7 +262,7 @@ const SinglePost = () => {
                                   </Text>
                                   <Text fontSize={'.8rem'}>
                                     {moment(comment.createdAt)
-                                      .format('MMMM DD')}
+                                      .fromNow()}
                                   </Text>
                                 </Flex>
                               </Flex>
