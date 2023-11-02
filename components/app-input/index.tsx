@@ -73,18 +73,18 @@ const AppInput = React.forwardRef<HTMLInputElement, AppInputProps>(
         {label && type !== "password" ? (
           <FormLabel
             htmlFor={id}
-            fontSize={"1.2rem"}
+            fontSize={"1rem"}
             fontWeight={"bold"}
-            color="typography.gray"
+            color="typography.black"
           >
             {label}
           </FormLabel>
         ) : label && type === "password" ? (
           <FormLabel
             htmlFor={id}
-            fontSize={"1.2rem"}
+            fontSize={"1rem"}
             fontWeight={"bold"}
-            color="typography.gray"
+            color="typography.black"
           >
             <Flex justifyContent={"space-between"}>
               <div>{label}</div>
@@ -130,8 +130,9 @@ const AppInput = React.forwardRef<HTMLInputElement, AppInputProps>(
         ) : null}
         <Input
           fontSize={"1rem"}
-          height={"3.1rem"}
+          height={"2.8rem"}
           fontWeight="500"
+          backgroundColor={"#FFF"}
           _placeholder={{ fontSize: "1rem", color: "grey" }}
           variant={variant}
           placeholder={placeholder}

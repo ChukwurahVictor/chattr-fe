@@ -1,4 +1,5 @@
-export const baseURL = "https://chatter-be.onrender.com";
+// export const baseURL = "https://chatter-be.onrender.com";
+export const baseURL = "http://localhost:5000";
 
 const urls = {
   // Auth
@@ -24,6 +25,6 @@ const urls = {
   fetchFollowingUrl: (id: string) => `${baseURL}/follows/${id}/following`,
 
   // Comments
-  commentsUrl: `${baseURL}/comments`
+  commentsUrl: `${baseURL}/comments`,
 };
 export default urls;

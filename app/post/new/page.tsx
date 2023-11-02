@@ -15,7 +15,7 @@ import "react-markdown-editor-lite/lib/index.css";
 
 const NewPost = () => {
   const router = useRouter();
-  const [content, setContent] = useState<any>();
+  const [content, setContent] = useState<any>("");
   const [title, setTitle] = useState("");
 
   const { loading, makeRequest } = useAxios();
@@ -25,17 +25,17 @@ const NewPost = () => {
 
   function handleEditorChange({ html, text }: any) {
     console.log("handleEditorChange", html, text);
-    setContent(text);
+    setContent(html);
   }
 
   const submit = async () => {
-    // if (content !== "" && title !== "") return;
+    if (content === "" || title === "") return;
 
     const { data, status, error } = await makeRequest({
       payload: {
         title: title,
         content: content,
-        authorId: user.user.id,
+        categoryId: "2488e1e9-408a-4b2c-af7a-3d74733ef76e",
         image: "https://www.npmjs.com//",
       },
       method: "post",
@@ -43,11 +43,11 @@ const NewPost = () => {
     });
 
     if (status === "error")
-      return toast.error(String(error) || "An error occurred")
+      return toast.error(String(error) || "An error occurred");
 
     toast.success("Post created successfully.");
     router.push("/");
-  }
+  };
 
   return (
     <Box
@@ -68,8 +68,10 @@ const NewPost = () => {
           borderRadius="5px"
           p="10px 15px"
           bg="#6c63ff"
+          _hover={{ bg: "#6c63fa" }}
+          _disabled={{ bg: "gray" }}
           color="#fff"
-          // disabled={ !content || !title }
+          isDisabled={content === "" || title === ""}
           onClick={() => {
             submit();
           }}

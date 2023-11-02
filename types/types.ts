@@ -17,6 +17,7 @@ export type AuthResponseType = {
 };
 
 export type PostType = {
+  post: {
     id: string;
     title: string;
     content: string;
@@ -25,7 +26,7 @@ export type PostType = {
       id: string;
       firstName: string;
       lastName: string;
-    },
+    };
     comments: {
       id: string;
       body: string;
@@ -34,14 +35,43 @@ export type PostType = {
         firstName: string;
         lastName: string;
         displayName: string;
-      },
+      };
       createdAt: string;
     }[];
     likes: {
       id: string;
-      userId: string
+      userId: string;
     }[];
     createdAt: string;
+  };
+};
+
+export type SinglePostType = {
+  id: string;
+  title: string;
+  content: string;
+  image: string;
+  author: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  };
+  comments: {
+    id: string;
+    body: string;
+    userId: string;
+    user: {
+      firstName: string;
+      lastName: string;
+      displayName: string;
+    };
+    createdAt: string;
+  }[];
+  likes: {
+    id: string;
+    userId: string;
+  }[];
+  createdAt: string;
 };
 
 export type Category = {

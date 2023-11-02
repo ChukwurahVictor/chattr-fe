@@ -35,7 +35,7 @@ const SinglePost = () => {
   const { isLoggedIn, data: userData } = useAppSelector(selectAuth);
 
   const { data, isGenerating, mutate: postMutate } = useFetchSinglePost(id);
-  const { data: followingData, mutate } = useFetchFollowing(userData?.user.id);
+  const { data: followingData, mutate } = useFetchFollowing(userData?.user?.id);
   const [commentBody, setCommentBody] = useState("");
 
   const handleInputChange = (e: any) => {
@@ -55,15 +55,15 @@ const SinglePost = () => {
 
     toast.success("Author followed successfully.");
     mutate();
-  }
+  };
 
   const handleUnFollow = () => {
-    console.log('Unfollowing author...');
-  }
+    console.log("Unfollowing author...");
+  };
 
-  const handleComment = async () => { 
+  const handleComment = async () => {
     const { status, error } = await makeRequest({
-      payload: { postId: id, body: commentBody, userId: userData?.user.id },
+      payload: { postId: id, body: commentBody },
       method: "post",
       url: urls.commentsUrl,
     });
@@ -74,8 +74,12 @@ const SinglePost = () => {
     toast.success("Comment posted successfully.");
     postMutate();
     setCommentBody("");
-  }
-  
+  };
+
+  const handleReaction = async () => {
+    console.log("Tried liking a post!");
+  };
+
   return (
     <Box
       maxW="3xl"
@@ -131,16 +135,14 @@ const SinglePost = () => {
                         return (
                           <Box key={following.id}>
                             {following?.id !== data?.author.id ? (
-                              <>
-                                <Text
-                                  color="#6c63ff"
-                                  fontSize={"sm"}
-                                  sx={{ cursor: "pointer" }}
-                                  onClick={() => handleFollow(data?.author.id)}
-                                >
-                                  follow
-                                </Text>
-                              </>
+                              <Text
+                                color="#6c63ff"
+                                fontSize={"sm"}
+                                sx={{ cursor: "pointer" }}
+                                onClick={() => handleFollow(data?.author.id)}
+                              >
+                                follow
+                              </Text>
                             ) : (
                               <Text
                                 color="#6c63ff"
@@ -182,7 +184,7 @@ const SinglePost = () => {
           </Box>
           <Flex justify="space-between" alignItems="center">
             <Flex gap="2" alignItems="center">
-              <Text>
+              <Text onClick={handleReaction}>
                 <FontAwesomeIcon icon={faHeart} /> {0}
               </Text>
               <Text
@@ -211,45 +213,50 @@ const SinglePost = () => {
                 <DrawerHeader>Comments</DrawerHeader>
 
                 <DrawerBody>
-                  <Flex alignItems={"center"} gap="2" my="4">
-                    <Avatar
-                      size={"sm"}
-                      name={`${userData?.user.firstName} ${userData?.user.lastName}`}
-                    />
-                    <Text fontWeight={"semibold"}>
-                      {userData?.user.firstName} {userData?.user.lastName}
-                    </Text>
-                  </Flex>
-                  <Textarea
-                    value={commentBody}
-                    onChange={handleInputChange}
-                    placeholder="Write your comment..."
-                    size="sm"
-                  />
-                  <Flex mt="4" justify="end">
-                    <Button
-                      colorScheme="purple"
-                      borderRadius="full"
-                      type="submit"
-                      isDisabled={loading}
-                      isLoading={loading}
-                      onClick={handleComment}
-                    >
-                      Comment
-                    </Button>
-                  </Flex>
+                  {userData?.accessToken ? (
+                    <Box>
+                      <Flex alignItems={"center"} gap="2" my="4">
+                        <Avatar
+                          size={"sm"}
+                          name={`${userData?.user.firstName} ${userData?.user.lastName}`}
+                        />
+                        <Text fontWeight={"semibold"}>
+                          {userData?.user.firstName} {userData?.user.lastName}
+                        </Text>
+                      </Flex>
+                      <Textarea
+                        value={commentBody}
+                        onChange={handleInputChange}
+                        placeholder="Write your comment..."
+                        size="sm"
+                      />
+                      <Flex mt="4" justify="end">
+                        <Button
+                          colorScheme="purple"
+                          borderRadius="full"
+                          type="submit"
+                          isDisabled={loading}
+                          isLoading={loading}
+                          onClick={handleComment}
+                        >
+                          Comment
+                        </Button>
+                      </Flex>
+                    </Box>
+                  ) : (
+                    <Text>Please, login to leave a comment</Text>
+                  )}
                   <Divider
                     border="0.2px solid #9D9D9D"
                     alignItems="center"
                     my="50px"
                   />
                   <Box>
-                    { data?.comments.length > 0 ? (
-                    <>
-                      {data?.comments.map((comment: any) => {
-                        return (
-                          <>
-                            <Box>
+                    {data?.comments.length > 0 ? (
+                      <>
+                        {data?.comments.map((comment: any) => {
+                          return (
+                            <Box key={comment?.id}>
                               <Flex alignItems={"center"} gap="2" my="4">
                                 <Avatar
                                   size={"sm"}
@@ -260,21 +267,19 @@ const SinglePost = () => {
                                     {comment?.user.firstName}{" "}
                                     {comment?.user.lastName}
                                   </Text>
-                                  <Text fontSize={'.8rem'}>
-                                    {moment(comment.createdAt)
-                                      .fromNow()}
+                                  <Text fontSize={".8rem"}>
+                                    {moment(comment.createdAt).fromNow()}
                                   </Text>
                                 </Flex>
                               </Flex>
                               <Text>{comment.body}</Text>
                             </Box>
-                          </>
-                        );
-                      })}
-                    </>
-                      ) : 
+                          );
+                        })}
+                      </>
+                    ) : (
                       <Text>No comments</Text>
-                    } 
+                    )}
                   </Box>
                 </DrawerBody>
               </DrawerContent>

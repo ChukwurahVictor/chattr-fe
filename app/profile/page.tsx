@@ -17,7 +17,7 @@ import {
 import Following from "@/components/following";
 import { useAppSelector } from "@/redux/hooks";
 import { selectAuth } from "@/redux/slices/auth";
-import { PostType } from "@/types/types";
+import { SinglePostType } from "@/types/types";
 import { useFetchSingleUser } from "@/services/swr/user";
 
 const Profile = () => {
@@ -56,7 +56,7 @@ const Profile = () => {
               <TabPanel>
                 {userData?.posts.length > 0 ? (
                   <>
-                    {userData?.posts?.map((post: PostType) => {
+                    {userData?.posts?.map((post: SinglePostType) => {
                       return (
                         <div key={post.id}>
                           <Card
@@ -79,7 +79,7 @@ const Profile = () => {
               <TabPanel>
                 {userData?.posts.length > 0 ? (
                   <>
-                    {userData?.posts?.map((post: PostType) => {
+                    {userData?.posts?.map((post: SinglePostType) => {
                       return (
                         <div key={post.id}>
                           <Card

@@ -38,6 +38,7 @@ export interface SignupPayloadType {
   displayName: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 const initialState: AuthState = {
