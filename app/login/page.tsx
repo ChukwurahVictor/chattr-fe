@@ -273,7 +273,13 @@ const Login = () => {
           />
         </svg>
       </Flex>
-      <Flex flexDir={"column"} mt="5rem" w="full" px="2rem" alignItems={'center'}>
+      <Flex
+        flexDir={"column"}
+        mt="5rem"
+        w="full"
+        px="2rem"
+        alignItems={"center"}
+      >
         <Flex flexDir={"column"} alignItems={"center"}>
           <Text fontSize={"1.6rem"} fontWeight={"bold"} mt="2rem">
             LOGIN
@@ -281,46 +287,45 @@ const Login = () => {
           <Text>Login to your account</Text>
         </Flex>
         <form onSubmit={handleSubmit(submit)}>
-          <Box width={"full"} mt={"3rem"}>
-            <Box>
-              <AppInput
-                type="email"
-                label="Email"
-                placeholder="johndoe@mail.com"
-                register={register("email")}
-                onChange={(e: any) => setValue("email", e.target.value)}
-                errorMessage={errors.email?.message}
-              />
-            </Box>
-          </Box>
-          <Box mt={"2rem"} width={"full"}>
-            <Box>
-              <AppInput
-                type="password"
-                label="Password"
-                placeholder="********"
-                register={register("password")}
-                onChange={(e: any) => setValue("password", e.target.value)}
-                errorMessage={errors.password?.message}
-              />
-            </Box>
-          </Box>
-          <Button
-            type="submit"
-            my={"2rem"}
-            w={"full"}
-            bg={"#6c63ff"}
-            isLoading={isSubmitting}
-            colorScheme="purple"
-            variant={"solid"}
+          <Flex
+            width={{ base: "15rem", sm: "30rem", md: "30rem" }}
+            gap="2rem"
+            justifyContent={"center"}
+            direction={"column"}
+            mt="2rem"
           >
-            LOGIN
-          </Button>
-          <Flex gap="2">
-            <Text>Don't have an account?</Text>
-            <Text color={"#6c63ff"} fontWeight={"bold"}>
-              <Link href="/signup">Create an account</Link>
-            </Text>
+            <AppInput
+              type="email"
+              label="Email"
+              placeholder="johndoe@mail.com"
+              register={register("email")}
+              onChange={(e: any) => setValue("email", e.target.value)}
+              errorMessage={errors.email?.message}
+            />
+            <AppInput
+              type="password"
+              label="Password"
+              placeholder="********"
+              register={register("password")}
+              onChange={(e: any) => setValue("password", e.target.value)}
+              errorMessage={errors.password?.message}
+            />
+            <Button
+              type="submit"
+              w={"full"}
+              bg={"#6c63ff"}
+              isLoading={isSubmitting}
+              colorScheme="purple"
+              variant={"solid"}
+            >
+              LOGIN
+            </Button>
+            <Flex gap="2" flexDir={{ base: "column", sm: "row" }}>
+              <Text>Don't have an account?</Text>
+              <Text color={"#6c63ff"} fontWeight={"bold"}>
+                <Link href="/signup">Create an account</Link>
+              </Text>
+            </Flex>
           </Flex>
         </form>
       </Flex>

@@ -10,7 +10,6 @@ import {
   Tab,
   TabPanel,
   TabIndicator,
-  Avatar,
   Text,
   Flex,
   Box,
@@ -19,19 +18,18 @@ import {
 
 import Card from "@/components/card";
 import Following from "@/components/following";
-import { PostType } from "@/types/types";
-// import Link from "next/link";
+import { SinglePostType } from "@/types/types";
 
 const Library = () => {
   const { data } = useAppSelector(selectAuth);
   const { data: userData } = useFetchSingleUser(data?.user?.id);
-  
+
   return (
     <Container maxW="6xl" mx="auto">
       <Flex justify="space-between">
         <Box py="62px" px="20px" w="full">
           <Flex alignItems="center" gap="2" mb="40px">
-            <Text fontSize={{ base: "36px", lg: "48px"}} fontWeight={"bold"}>
+            <Text fontSize={{ base: "36px", lg: "48px" }} fontWeight={"bold"}>
               Your Library
             </Text>
           </Flex>
@@ -54,7 +52,7 @@ const Library = () => {
               <TabPanel>
                 {userData?.posts.length > 0 ? (
                   <>
-                    {userData?.posts?.map((post: PostType) => {
+                    {userData?.posts?.map((post: SinglePostType) => {
                       return (
                         <div key={post.id}>
                           <Card
@@ -77,7 +75,7 @@ const Library = () => {
               <TabPanel>
                 {userData?.posts.length > 0 ? (
                   <>
-                    {userData?.posts?.map((post: PostType) => {
+                    {userData?.posts?.map((post: SinglePostType) => {
                       return (
                         <div key={post.id}>
                           <Card
@@ -99,7 +97,7 @@ const Library = () => {
             </TabPanels>
           </Tabs>
         </Box>
-        <Flex display={{ base:"none", lg:"block" }}>
+        <Flex display={{ base: "none", lg: "block" }}>
           <Following />
         </Flex>
       </Flex>

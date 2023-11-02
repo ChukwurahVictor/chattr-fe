@@ -31,24 +31,35 @@ const Category = () => {
             <Text fontSize={{ base: "28px", lg: "48px" }} fontWeight={"bold"}>
               {data?.name}
             </Text>
-            <Flex flexDir={"column"} mt="40px" gap="2">
+            <Flex
+              flexDir={"column"}
+              w={{ base: "100%", md: "75%" }}
+              mt="40px"
+              gap="2"
+            >
               {isGenerating ? (
                 <CustomSpinner />
               ) : (
                 <>
                   {data?.posts.length > 0 ? (
                     <>
-                      {data?.posts.map((post: PostType) => {
+                      {data?.posts?.map((post: PostType) => {
                         return (
-                          <Link href={`/post/${post.id}`} key={post.id}>
+                          <Link
+                            href={`/post/${post?.post?.id}`}
+                            key={post?.post?.id}
+                          >
                             <Flex alignItems={"center"}>
                               <Card
-                                author={`${post.author.firstName} ${post.author.lastName}`}
-                                title={post.title}
-                                body={`${post.content.substring(0, 150)}...`}
-                                dateTime={post?.createdAt}
-                                noOfComments={post.comments.length}
-                                noOfLikes={post.likes.length}
+                                author={`${post?.post?.author?.firstName} ${post?.post?.author?.lastName}`}
+                                title={post?.post?.title}
+                                body={`${post?.post?.content?.substring(
+                                  0,
+                                  150
+                                )}...`}
+                                dateTime={post?.post?.createdAt}
+                                noOfComments={post?.post?.comments?.length}
+                                noOfLikes={post?.post?.likes?.length}
                                 // image={post.image}
                               />
                             </Flex>

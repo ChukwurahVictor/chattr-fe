@@ -6,7 +6,7 @@ import Card from "@/components/card";
 import { useFetchPosts } from "@/services/swr/post";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator, Text, VStack, StackDivider, Flex } from "@chakra-ui/react";
 import CustomSpinner from '@/components/custom-spinner';
-import { PostType } from '@/types/types';
+import { SinglePostType } from "@/types/types";
 
 const Post = () => {
   const { data, isGenerating } = useFetchPosts();
@@ -36,10 +36,10 @@ const Post = () => {
               <>
                 {data?.length > 0 ? (
                   <>
-                    {data?.map((post: PostType) => {
+                    {data?.map((post: SinglePostType) => {
                       return (
                         <Link href={`/post/${post.id}`} key={post.id}>
-                          <Flex alignItems={'center'}>
+                          <Flex alignItems={"center"}>
                             <Card
                               author={`${post.author.firstName} ${post.author.lastName}`}
                               title={post.title}
@@ -63,7 +63,7 @@ const Post = () => {
           <TabPanel>
             {data?.length > 0 ? (
               <>
-                {data?.map((post: PostType) => {
+                {data?.map((post: SinglePostType) => {
                   return (
                     <Link href={`/post/${post.id}`} key={post.id}>
                       <VStack
