@@ -49,5 +49,8 @@
     "swr": "^2.1.5",
     "typescript": "5.0.4",
     "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
