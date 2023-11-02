@@ -1,5 +1,6 @@
-// export const baseURL = "https://chatter-be.onrender.com";
-export const baseURL = "http://localhost:5000";
+// export const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+// export const baseURL = "http://localhost:5000";
+export const baseURL = "https://chatter-be.onrender.com";
 
 const urls = {
   // Auth
